@@ -3,6 +3,8 @@ public class Simulation {
     private int timesRolled;
     private Dice dice;
     private Bins bin;
+    private int lowest;
+    private int highest;
 
     public static void main(String[] args) {
         Simulation sim = new Simulation(2,1000000);
@@ -14,8 +16,8 @@ public class Simulation {
         this.numOfDice = numberDice;
         this.timesRolled = timesThrown;
         this.dice = new Dice(numberDice);
-        int lowest = numberDice;
-        int highest = numberDice * 6;
+        this.lowest = numberDice;
+        this.highest = numberDice * 6;
         this.bin = new Bins(lowest, highest);
     }
 
@@ -34,19 +36,15 @@ public class Simulation {
             System.out.println("*** \nSimulation of " + numOfDice
                     + " dice tossed for " + timesRolled + " times. \n***");
 
-            for (int i = 2; i < (binNum * 6-1 ); i++) {
-                binRolled = bin.getBin(binNum);
-                binNum += 1;
-                percent = (double) binRolled / timesRolled;
+            for (int i = 0; i <=((highest-lowest)); i++) {
+                binRolled = bin.getBin(i +2);
+                percent = ((double) binRolled / timesRolled);
 
-                for (int j = 0; j < Math.round(percent / timesRolled* 100); j++) {
+                for (int j = 0; j < (Math.round(percent* 100)); j++) {
                     stars += "*";
                 }
-                System.out.println(String.format("%3d :  %10d:  %.2f %s", (binNum + i), binRolled, percent, stars ));
+                System.out.println(String.format("%3d :  %10d:  %.2f %s", (lowest+i), binRolled, percent, stars ));
                 stars = "";
-//                    bin.increment(i) + " :    " + bin.getBin(numberDice) +
-//                    ((double)(bin.getBin(numberDice)/timesThrown)) + stars);
-
             }
         }
     }
